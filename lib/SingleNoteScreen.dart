@@ -1,8 +1,10 @@
+import 'package:Sqlflite_test/AddAndEditNoteWidget.dart';
+import 'package:Sqlflite_test/main.dart';
 import 'package:flutter/material.dart';
 
 import 'Notes.dart';
 
-class SingleNoteScreen extends StatelessWidget {
+class SingleNoteScreen extends StatelessWidget{
   Notes _note;
   SingleNoteScreen(this._note);
   @override
@@ -10,7 +12,18 @@ class SingleNoteScreen extends StatelessWidget {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.purple,
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+                context: context,
+                child: SimpleDialog(
+                  title: AddNote(context, notes: _note),
+                )).then((_) {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return ToDoApp();
+              }), (route) => false);
+            });
+          },
           child: Icon(Icons.edit),
         ),
         appBar: AppBar(

@@ -1,5 +1,6 @@
+import 'package:Sqlflite_test/Notes.dart';
 import 'package:flutter/material.dart';
-import 'AddNoteWidget.dart';
+import 'AddAndEditNoteWidget.dart';
 import 'Future.dart';
 import 'database.dart';
 
@@ -12,13 +13,19 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ToDoApp(),
     );
   }
 }
 
-class ToDoApp extends StatelessWidget {
+class ToDoApp extends StatefulWidget {
+  @override
+  _ToDoAppState createState() => _ToDoAppState();
+}
+
+class _ToDoAppState extends State<ToDoApp> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -49,7 +56,7 @@ class ToDoApp extends StatelessWidget {
                     child: SimpleDialog(
                       title: AddNote(context),
                     )).then((_) {
-                      //ToDO
+                  setState(() {});
                 });
               },
             )

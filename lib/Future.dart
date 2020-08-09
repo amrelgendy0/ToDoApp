@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'Notes.dart';
 import 'SingleNoteScreen.dart';
 import 'database.dart';
@@ -54,7 +53,6 @@ class _FutureeState extends State<Futuree> {
                     vertical: 6,
                   ),
                 ),
-                direction: DismissDirection.endToStart,
                 confirmDismiss: (direction) {
                   setState(() {
                     database().inverseDone(_note);
@@ -67,14 +65,13 @@ class _FutureeState extends State<Futuree> {
                     horizontal: 4,
                     vertical: 6,
                   ),
-                  child: ListTile(onTap: (){
-
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                      return SingleNoteScreen(_note);
-                    }));
-
-
-                  },
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return SingleNoteScreen(_note);
+                      }));
+                    },
                     onLongPress: () {
                       return showDialog(
                         context: context,
@@ -106,7 +103,8 @@ class _FutureeState extends State<Futuree> {
                         }
                       });
                     },
-                    title: Text(_note.title.replaceAllMapped("\n", (match) => " ")),
+                    title: Text(
+                        _note.title.replaceAllMapped("\n", (match) => " ")),
                     leading: _note.isDone
                         ? Icon(
                             Icons.done,
@@ -116,7 +114,8 @@ class _FutureeState extends State<Futuree> {
                             Icons.error,
                             color: Colors.red,
                           ),
-                    subtitle: Text(_note.note.replaceAllMapped("\n", (match) => " ")),
+                    subtitle:
+                        Text(_note.note.replaceAllMapped("\n", (match) => " ")),
                     trailing: Text(_note.dateTime.toString().substring(0, 19)),
                   ),
                 ),
