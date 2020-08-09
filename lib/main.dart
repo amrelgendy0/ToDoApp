@@ -1,8 +1,7 @@
-import 'package:Sqlflite_test/Future.dart';
-import 'package:Sqlflite_test/Notes.dart';
-import 'package:Sqlflite_test/database.dart';
 import 'package:flutter/material.dart';
 import 'AddNoteWidget.dart';
+import 'Future.dart';
+import 'database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

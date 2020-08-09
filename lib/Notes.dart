@@ -8,8 +8,8 @@ class Notes {
   Color color;
 
   Notes({
-    @required this.color,
-    @required this.isDone,
+    this.color,
+    this.isDone,
     this.dateTime,
     this.title,
     this.note,

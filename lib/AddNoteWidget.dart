@@ -1,6 +1,8 @@
-import 'package:Sqlflite_test/AutoDirectionTextField.dart';
-import 'package:Sqlflite_test/database.dart';
+
 import 'package:flutter/material.dart';
+
+import 'AutoDirectionTextField.dart';
+import 'database.dart';
 Widget AddNote(BuildContext ctx){
   GlobalKey<FormState> _Globalkey = GlobalKey<FormState>();
   TextEditingController _title = TextEditingController();

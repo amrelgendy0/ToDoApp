@@ -1,7 +1,7 @@
-import 'package:Sqlflite_test/SingleNoteScreen.dart';
 import 'package:flutter/material.dart';
 
 import 'Notes.dart';
+import 'SingleNoteScreen.dart';
 import 'database.dart';
 
 enum dataTybes { NotesNotDone, dataReversed, NotesDone }

@@ -1,5 +1,6 @@
-import 'package:Sqlflite_test/Notes.dart';
 import 'package:flutter/material.dart';
+
+import 'Notes.dart';
 
 class SingleNoteScreen extends StatelessWidget {
   Notes _note;
