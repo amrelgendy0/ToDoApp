@@ -1,17 +1,17 @@
-import 'package:Sqlflite_test/Notes.dart';
+import 'package:Sqlflite_test/Model/Notes.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'AutoDirectionTextField.dart';
-import 'database.dart';
+import '../Helper/database.dart';
 
 Widget AddNote(BuildContext ctx, {Notes notes}) {
   TextEditingController _title = TextEditingController();
   TextEditingController _note = TextEditingController();
-  DateTime _date ;
+  DateTime _date;
   if (notes != null) {
     _title.text = notes.title;
     _note.text = notes.note;
-    _date=notes.dateTime;
+    _date = notes.dateTime;
   }
   GlobalKey<FormState> _Globalkey = GlobalKey<FormState>();
   return Form(
@@ -24,8 +24,9 @@ Widget AddNote(BuildContext ctx, {Notes notes}) {
         AutoDirectionTextField("Note", _note),
         DateTimePicker(
           type: DateTimePickerType.dateTime,
-          initialValue: notes!=null?"${notes.dateTime}":"",
+          initialValue: notes != null ? "${notes.dateTime}" : "",
           firstDate: DateTime(2000),
+          icon: Icon(Icons.date_range),
           lastDate: DateTime(2100),
           dateLabelText: 'Select Date',
           onChanged: (val) {
@@ -38,16 +39,19 @@ Widget AddNote(BuildContext ctx, {Notes notes}) {
           },
         ),
         RaisedButton(
-          child:(notes != null)? const Text("Edit Note"):const Text("Add Note"),
+          child: (notes != null)
+              ? const Text("Edit Note")
+              : const Text("Add Note"),
           color: Colors.blueAccent,
           onPressed: () {
             if (_Globalkey.currentState.validate()) {
               if (notes != null) {
-                database()
-                    .Edit(notes, newNote: _note.text, newTitle: _title.text,newDatetime: _date);
+                database().Edit(notes,
+                    newNote: _note.text,
+                    newTitle: _title.text,
+                    newDatetime: _date);
               } else {
-                database()
-                    .addNote(_date, _title.text, _note.text, false);
+                database().addNote(_date, _title.text, _note.text, false);
               }
               Navigator.pop(ctx);
             }

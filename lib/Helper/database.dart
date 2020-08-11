@@ -1,4 +1,4 @@
-import 'package:Sqlflite_test/Notes.dart';
+import 'package:Sqlflite_test/Model/Notes.dart';
 import 'package:random_color/random_color.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -11,13 +11,13 @@ class database {
   }
 
   Future<List<Notes>> get NotesDone async {
-    return await AllNotes
-        .then((value) => value.where((element) => element.isDone).toList());
+    return await AllNotes.then(
+        (value) => value.where((element) => element.isDone).toList());
   }
 
   Future<List<Notes>> get NotesNotDone async {
-    return await AllNotes
-        .then((value) => value.where((element) => !element.isDone).toList());
+    return await AllNotes.then(
+        (value) => value.where((element) => !element.isDone).toList());
   }
 
   Future<List<Notes>> get NotesAfter async {
@@ -108,9 +108,7 @@ class database {
 
   Future<Database> initDatabase() async {
     _db = await openDatabase(
-      join(await getDatabasesPath(), 'noote.db'),onOpen: (sa){
-        print(sa.path);
-    },
+      join(await getDatabasesPath(), 'noote.db'),
       onCreate: (db, version) {
         return db.execute(
           "CREATE TABLE notes(ID INTEGER PRIMARY KEY, title TEXT, dateTime TEXT, note TEXT,isDone INTEGER,color INTEGER)",
@@ -119,5 +117,9 @@ class database {
       version: 1,
     );
     return _db;
+  }
+
+  Future<void> closeDatabase() {
+    _db.close();
   }
 }

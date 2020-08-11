@@ -1,10 +1,10 @@
-import 'package:Sqlflite_test/AddAndEditNoteWidget.dart';
-import 'package:Sqlflite_test/main.dart';
+import 'package:Sqlflite_test/Screen/HomeScreen.dart';
+import 'package:Sqlflite_test/Widget/AddAndEditNoteWidget.dart';
 import 'package:flutter/material.dart';
 
-import 'Notes.dart';
+import '../Model/Notes.dart';
 
-class SingleNoteScreen extends StatelessWidget{
+class SingleNoteScreen extends StatelessWidget {
   Notes _note;
   SingleNoteScreen(this._note);
   @override
@@ -20,7 +20,7 @@ class SingleNoteScreen extends StatelessWidget{
                 )).then((_) {
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (BuildContext context) {
-                return ToDoApp();
+                return HomeScreen();
               }), (route) => false);
             });
           },

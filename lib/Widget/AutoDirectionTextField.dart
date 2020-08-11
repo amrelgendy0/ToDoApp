@@ -15,6 +15,7 @@ class AutoDirectionTextField extends StatefulWidget {
   @override
   _AutoDirectionTextFieldState createState() => _AutoDirectionTextFieldState();
 }
+
 class _AutoDirectionTextFieldState extends State<AutoDirectionTextField> {
   @override
   Widget build(BuildContext context) {

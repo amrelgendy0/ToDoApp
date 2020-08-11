@@ -1,44 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'Notes.dart';
+import '../Model/Notes.dart';
 import 'SingleNoteScreen.dart';
-import 'database.dart';
+import '../Helper/database.dart';
 
 enum dataTybes { NotesNotDone, AllNotes, NotesDone, NotesBefore, NotesAfter }
 
-class Futuree extends StatefulWidget {
-  Futuree(this.tybe);
-  dataTybes tybe;
-
+class NotesScreen extends StatefulWidget {
+  NotesScreen(this._tybe);
+  dataTybes _tybe;
   @override
-  _FutureeState createState() => _FutureeState();
+  _NotesScreenState createState() => _NotesScreenState();
 }
 
-class _FutureeState extends State<Futuree> {
-  Future<List<Notes>> get handle {
-    switch (widget.tybe) {
-      case dataTybes.NotesNotDone:
-        return database().NotesNotDone;
-        break;
-      case dataTybes.AllNotes:
-        return database().AllNotes;
-        break;
-      case dataTybes.NotesDone:
-        return database().NotesDone;
-        break;
-      case dataTybes.NotesBefore:
-        return database().NotesBefore;
-        break;
-      case dataTybes.NotesAfter:
-        return database().NotesAfter;
-        break;
-    }
-  }
-
+class _NotesScreenState extends State<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: handle,
+      future: handleData,
       builder: (BuildContext context, AsyncSnapshot<List<Notes>> snapshot) {
         if (!snapshot.hasData)
           return CircularProgressIndicator();
@@ -51,7 +30,7 @@ class _FutureeState extends State<Futuree> {
                 background: Container(
                   color: _note.isDone ? Colors.red : Colors.green,
                   child: Icon(
-                    _note.isDone ? Icons.block : Icons.done,
+                    _note.isDone ? Icons.do_not_disturb_on : Icons.done,
                     size: 40,
                   ),
                   alignment: Alignment.centerRight,
@@ -116,15 +95,17 @@ class _FutureeState extends State<Futuree> {
                         ? const Icon(
                             Icons.done,
                             color: Colors.blueAccent,
+                            size: 40,
                           )
                         : const Icon(
-                            Icons.error,
+                            Icons.do_not_disturb_on,
                             color: Colors.red,
+                            size: 40,
                           ),
                     subtitle:
                         Text(_note.note.replaceAllMapped("\n", (match) => " ")),
                     trailing: Text(
-                      "${DateFormat("yyyy/MM/dd\nHH:mm").format(_note.dateTime)}\n",
+                      "${DateFormat("yyyy/MM/dd\nHH:mm").format(_note.dateTime)}",
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -135,5 +116,25 @@ class _FutureeState extends State<Futuree> {
         }
       },
     );
+  }
+
+  Future<List<Notes>> get handleData {
+    switch (widget._tybe) {
+      case dataTybes.NotesNotDone:
+        return database().NotesNotDone;
+        break;
+      case dataTybes.AllNotes:
+        return database().AllNotes;
+        break;
+      case dataTybes.NotesDone:
+        return database().NotesDone;
+        break;
+      case dataTybes.NotesBefore:
+        return database().NotesBefore;
+        break;
+      case dataTybes.NotesAfter:
+        return database().NotesAfter;
+        break;
+    }
   }
 }
