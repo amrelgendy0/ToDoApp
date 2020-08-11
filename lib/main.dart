@@ -65,7 +65,7 @@ class _ToDoAppState extends State<ToDoApp> {
         body: TabBarView(
           children: [
             Futuree(dataTybes.NotesNotDone),
-            Futuree(dataTybes.dataReversed),
+            Futuree(dataTybes.AllNotes),
             Futuree(dataTybes.NotesDone),
           ],
         ),

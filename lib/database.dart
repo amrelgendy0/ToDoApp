@@ -4,37 +4,37 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class database {
-  static Database db;
-  Future<List<Notes>> get dataReversed async {
-    return database.db.query('notes').then((value) => List<Notes>.generate(
+  static Database _db;
+  Future<List<Notes>> get AllNotes async {
+    return database._db.query('notes').then((value) => List<Notes>.generate(
         value.length, (index) => Notes.FromMap(value[index])));
   }
 
   Future<List<Notes>> get NotesDone async {
-    return await dataReversed
+    return await AllNotes
         .then((value) => value.where((element) => element.isDone).toList());
   }
 
   Future<List<Notes>> get NotesNotDone async {
-    return await dataReversed
+    return await AllNotes
         .then((value) => value.where((element) => !element.isDone).toList());
   }
 
-  Future<List<Notes>> get CommingNotes async {
-    return await dataReversed.then((value) => value
+  Future<List<Notes>> get NotesAfter async {
+    return await AllNotes.then((value) => value
         .where((element) => element.dateTime.isAfter(DateTime.now()))
         .toList());
   }
 
-  Future<List<Notes>> get PassedNotes async {
-    return await dataReversed.then((value) => value
+  Future<List<Notes>> get NotesBefore async {
+    return await AllNotes.then((value) => value
         .where((element) => element.dateTime.isBefore(DateTime.now()))
         .toList());
   }
 
   Future<int> addNote(
       DateTime time, String title, String note, bool isDone) async {
-    return await db.insert(
+    return await _db.insert(
         'notes',
         Notes(
                 dateTime: time,
@@ -51,7 +51,7 @@ class database {
   }
 
   Future<int> deleteNoteByForce(Notes note) async {
-    return await db.delete('notes',
+    return await _db.delete('notes',
         where:
             "note = ? AND title = ? AND isDone = ? AND dateTime = ? And color = ?",
         whereArgs: [
@@ -64,7 +64,7 @@ class database {
   }
 
   Future<int> inverseDone(Notes note) async {
-    return await db.update(
+    return await _db.update(
         "notes",
         Notes(
                 dateTime: note.dateTime,
@@ -86,7 +86,7 @@ class database {
 
   Future<int> Edit(Notes note,
       {String newTitle, String newNote, DateTime newDatetime}) async {
-    return await db.update(
+    return await _db.update(
         "notes",
         Notes(
                 dateTime: newDatetime == null ? note.dateTime : newDatetime,
@@ -107,8 +107,10 @@ class database {
   }
 
   Future<Database> initDatabase() async {
-    db = await openDatabase(
-      join(await getDatabasesPath(), 'noote.db'),
+    _db = await openDatabase(
+      join(await getDatabasesPath(), 'noote.db'),onOpen: (sa){
+        print(sa.path);
+    },
       onCreate: (db, version) {
         return db.execute(
           "CREATE TABLE notes(ID INTEGER PRIMARY KEY, title TEXT, dateTime TEXT, note TEXT,isDone INTEGER,color INTEGER)",
@@ -116,6 +118,6 @@ class database {
       },
       version: 1,
     );
-    return db;
+    return _db;
   }
 }

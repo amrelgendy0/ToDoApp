@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'Notes.dart';
 import 'SingleNoteScreen.dart';
 import 'database.dart';
 
-enum dataTybes { NotesNotDone, dataReversed, NotesDone }
+enum dataTybes { NotesNotDone, AllNotes, NotesDone, NotesBefore, NotesAfter }
 
 class Futuree extends StatefulWidget {
   Futuree(this.tybe);
@@ -19,11 +20,17 @@ class _FutureeState extends State<Futuree> {
       case dataTybes.NotesNotDone:
         return database().NotesNotDone;
         break;
-      case dataTybes.dataReversed:
-        return database().dataReversed;
+      case dataTybes.AllNotes:
+        return database().AllNotes;
         break;
       case dataTybes.NotesDone:
         return database().NotesDone;
+        break;
+      case dataTybes.NotesBefore:
+        return database().NotesBefore;
+        break;
+      case dataTybes.NotesAfter:
+        return database().NotesAfter;
         break;
     }
   }
@@ -48,7 +55,7 @@ class _FutureeState extends State<Futuree> {
                     size: 40,
                   ),
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     horizontal: 4,
                     vertical: 6,
                   ),
@@ -61,7 +68,7 @@ class _FutureeState extends State<Futuree> {
                 key: ValueKey(index),
                 child: Container(
                   color: _note.color,
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     horizontal: 4,
                     vertical: 6,
                   ),
@@ -76,19 +83,19 @@ class _FutureeState extends State<Futuree> {
                       return showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: Text('Are you sure?'),
-                          content: Text(
+                          title: const Text('Are you sure?'),
+                          content: const Text(
                             'Do you want to remove this note?',
                           ),
                           actions: <Widget>[
                             FlatButton(
-                              child: Text('No'),
+                              child: const Text('No'),
                               onPressed: () {
                                 Navigator.of(ctx).pop(false);
                               },
                             ),
                             FlatButton(
-                              child: Text('Yes'),
+                              child: const Text('Yes'),
                               onPressed: () {
                                 Navigator.of(ctx).pop(true);
                               },
@@ -106,17 +113,20 @@ class _FutureeState extends State<Futuree> {
                     title: Text(
                         _note.title.replaceAllMapped("\n", (match) => " ")),
                     leading: _note.isDone
-                        ? Icon(
+                        ? const Icon(
                             Icons.done,
                             color: Colors.blueAccent,
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.error,
                             color: Colors.red,
                           ),
                     subtitle:
                         Text(_note.note.replaceAllMapped("\n", (match) => " ")),
-                    trailing: Text(_note.dateTime.toString().substring(0, 19)),
+                    trailing: Text(
+                      "${DateFormat("yyyy/MM/dd\nHH:mm").format(_note.dateTime)}\n",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               );
