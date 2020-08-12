@@ -1,7 +1,7 @@
-import 'package:Sqlflite_test/Model/Notes.dart';
+import '../Model/Notes.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'AutoDirectionTextField.dart';
+import './AutoDirectionTextField.dart';
 import '../Helper/database.dart';
 
 Widget AddNote(BuildContext ctx, {Notes notes}) {

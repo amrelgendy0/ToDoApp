@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 class Notes {
+  int ID;
   String title;
   String note;
   DateTime dateTime;
@@ -8,6 +11,7 @@ class Notes {
   Color color;
 
   Notes({
+  this.ID,
     this.color,
     this.isDone,
     this.dateTime,
@@ -31,6 +35,7 @@ class Notes {
         note: map['note'],
         dateTime: DateTime.parse(map['dateTime']),
         isDone: map['isDone'] == 1 ? true : false,
-        color: Color(map['color']));
+        color: Color(map['color']),
+        ID: map['ID']);
   }
 }

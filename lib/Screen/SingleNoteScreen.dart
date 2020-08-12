@@ -1,7 +1,6 @@
-import 'package:Sqlflite_test/Screen/HomeScreen.dart';
-import 'package:Sqlflite_test/Widget/AddAndEditNoteWidget.dart';
+import './HomeScreen.dart';
+import '../Widget/AddAndEditNoteWidget.dart';
 import 'package:flutter/material.dart';
-
 import '../Model/Notes.dart';
 
 class SingleNoteScreen extends StatelessWidget {

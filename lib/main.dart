@@ -1,6 +1,6 @@
-import 'package:Sqlflite_test/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'Helper/database.dart';
+import './Helper/database.dart';
+import './Screen/HomeScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

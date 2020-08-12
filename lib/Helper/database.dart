@@ -1,4 +1,4 @@
-import 'package:Sqlflite_test/Model/Notes.dart';
+import '../Model/Notes.dart';
 import 'package:random_color/random_color.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -50,16 +50,12 @@ class database {
             .toMap());
   }
 
-  Future<int> deleteNoteByForce(Notes note) async {
+  Future<int> deleteNoteByForce(int id) async {
     return await _db.delete('notes',
         where:
-            "note = ? AND title = ? AND isDone = ? AND dateTime = ? And color = ?",
+            "ID = ?",
         whereArgs: [
-          note.note,
-          note.title,
-          note.isDone ? 1 : 0,
-          note.dateTime.toString(),
-          note.color.value
+       id
         ]);
   }
 
@@ -74,13 +70,9 @@ class database {
                 color: note.color)
             .toMap(),
         where:
-            "note = ? AND title = ? AND isDone = ? AND dateTime = ? And color = ?",
+            "ID = ?",
         whereArgs: [
-          note.note,
-          note.title,
-          note.isDone ? 1 : 0,
-          note.dateTime.toString(),
-          note.color.value
+          note.ID
         ]);
   }
 
@@ -96,13 +88,9 @@ class database {
                 color: note.color)
             .toMap(),
         where:
-            "note = ? AND title = ? AND isDone = ? AND dateTime = ? And color = ?",
+            "ID = ?",
         whereArgs: [
-          note.note,
-          note.title,
-          note.isDone ? 1 : 0,
-          note.dateTime.toString(),
-          note.color.value
+         note.ID
         ]);
   }
 

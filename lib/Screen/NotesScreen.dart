@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Model/Notes.dart';
-import 'SingleNoteScreen.dart';
+import './SingleNoteScreen.dart';
 import '../Helper/database.dart';
 
 enum dataTybes { NotesNotDone, AllNotes, NotesDone, NotesBefore, NotesAfter }
@@ -20,7 +20,7 @@ class _NotesScreenState extends State<NotesScreen> {
       future: handleData,
       builder: (BuildContext context, AsyncSnapshot<List<Notes>> snapshot) {
         if (!snapshot.hasData)
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         else {
           return ListView.builder(
             itemCount: snapshot.data.length,
@@ -84,7 +84,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ).then((value) {
                         if (value == true) {
                           setState(() {
-                            database().deleteNoteByForce(_note);
+                            database().deleteNoteByForce(_note.ID);
                           });
                         }
                       });
