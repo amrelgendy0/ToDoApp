@@ -26,7 +26,7 @@ Widget AddNote(BuildContext ctx, {Notes notes}) {
           type: DateTimePickerType.dateTime,
           initialValue: notes != null ? "${notes.dateTime}" : "",
           firstDate: DateTime(2000),
-          icon: Icon(Icons.date_range),
+          icon: const Icon(Icons.date_range),
           lastDate: DateTime(2100),
           dateLabelText: 'Select Date',
           onChanged: (val) {

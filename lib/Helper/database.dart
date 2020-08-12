@@ -51,47 +51,29 @@ class database {
   }
 
   Future<int> deleteNoteByForce(int id) async {
-    return await _db.delete('notes',
-        where:
-            "ID = ?",
-        whereArgs: [
-       id
-        ]);
+    return await _db.delete('notes', where: "ID = ?", whereArgs: [id]);
   }
 
   Future<int> inverseDone(Notes note) async {
-    return await _db.update(
-        "notes",
-        Notes(
-                dateTime: note.dateTime,
-                note: note.note,
-                title: note.title,
-                isDone: !note.isDone,
-                color: note.color)
-            .toMap(),
-        where:
-            "ID = ?",
-        whereArgs: [
-          note.ID
-        ]);
+   await Edit(note, newIsDone: !note.isDone);
   }
 
   Future<int> Edit(Notes note,
-      {String newTitle, String newNote, DateTime newDatetime}) async {
+      {String newTitle,
+      String newNote,
+      DateTime newDatetime,
+      bool newIsDone}) async {
     return await _db.update(
         "notes",
         Notes(
                 dateTime: newDatetime == null ? note.dateTime : newDatetime,
                 note: newNote == null ? note.note : newNote,
                 title: newTitle == null ? note.title : newTitle,
-                isDone: note.isDone,
+                isDone: newIsDone == null ? note.isDone : newIsDone,
                 color: note.color)
             .toMap(),
-        where:
-            "ID = ?",
-        whereArgs: [
-         note.ID
-        ]);
+        where: "ID = ?",
+        whereArgs: [note.ID]);
   }
 
   Future<Database> initDatabase() async {
