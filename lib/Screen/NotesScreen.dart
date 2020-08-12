@@ -20,7 +20,7 @@ class _NotesScreenState extends State<NotesScreen> {
       future: handleData,
       builder: (BuildContext context, AsyncSnapshot<List<Notes>> snapshot) {
         if (!snapshot.hasData)
-          return const CircularProgressIndicator();
+          return Center(child: const CircularProgressIndicator());
         else {
           return ListView.builder(
             itemCount: snapshot.data.length,
@@ -84,7 +84,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ).then((value) {
                         if (value == true) {
                           setState(() {
-                            database().deleteNoteByForce(_note.ID);
+                            database().delete(_note.ID);
                           });
                         }
                       });
@@ -121,13 +121,13 @@ class _NotesScreenState extends State<NotesScreen> {
   Future<List<Notes>> get handleData {
     switch (widget._tybe) {
       case dataTybes.NotesNotDone:
-        return database().NotesNotDone;
+        return database().unDoneNotes;
         break;
       case dataTybes.AllNotes:
         return database().AllNotes;
         break;
       case dataTybes.NotesDone:
-        return database().NotesDone;
+        return database().doneNotes;
         break;
       case dataTybes.NotesBefore:
         return database().NotesBefore;

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import './Helper/database.dart';
 import './Screen/HomeScreen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await database().initDatabase();
+void main() {
   runApp(MyApp());
+  database().initDatabase();
 }
 
 class MyApp extends StatelessWidget {

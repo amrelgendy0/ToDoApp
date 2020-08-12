@@ -11,7 +11,7 @@ class Notes {
   Color color;
 
   Notes({
-  this.ID,
+    this.ID,
     this.color,
     this.isDone,
     this.dateTime,

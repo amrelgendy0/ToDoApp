@@ -5,19 +5,38 @@ import 'package:path/path.dart';
 
 class database {
   static Database _db;
+
+  Future<Database> initDatabase() async {
+    _db = await openDatabase(
+      join(await getDatabasesPath(), 'notes.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          "CREATE TABLE notes(ID INTEGER PRIMARY KEY, title TEXT, dateTime TEXT, note TEXT,isDone INTEGER,color INTEGER)",
+        );
+      },
+      version: 1,
+    );
+    return _db;
+  }
+
   Future<List<Notes>> get AllNotes async {
     return database._db.query('notes').then((value) => List<Notes>.generate(
         value.length, (index) => Notes.FromMap(value[index])));
   }
 
-  Future<List<Notes>> get NotesDone async {
-    return await AllNotes.then(
-        (value) => value.where((element) => element.isDone).toList());
+  Future<List<Notes>> _NotesFilterByDone(int done) async {
+    return database._db
+        .query('notes', where: "isDone = ?", whereArgs: [done]).then((value) =>
+            List<Notes>.generate(
+                value.length, (index) => Notes.FromMap(value[index])));
   }
 
-  Future<List<Notes>> get NotesNotDone async {
-    return await AllNotes.then(
-        (value) => value.where((element) => !element.isDone).toList());
+  Future<List<Notes>> get doneNotes {
+    return _NotesFilterByDone(1);
+  }
+
+  Future<List<Notes>> get unDoneNotes {
+    return _NotesFilterByDone(0);
   }
 
   Future<List<Notes>> get NotesAfter async {
@@ -50,12 +69,12 @@ class database {
             .toMap());
   }
 
-  Future<int> deleteNoteByForce(int id) async {
+  Future<int> delete(int id) async {
     return await _db.delete('notes', where: "ID = ?", whereArgs: [id]);
   }
 
   Future<int> inverseDone(Notes note) async {
-   await Edit(note, newIsDone: !note.isDone);
+    await Edit(note, newIsDone: !note.isDone);
   }
 
   Future<int> Edit(Notes note,
@@ -74,19 +93,6 @@ class database {
             .toMap(),
         where: "ID = ?",
         whereArgs: [note.ID]);
-  }
-
-  Future<Database> initDatabase() async {
-    _db = await openDatabase(
-      join(await getDatabasesPath(), 'noote.db'),
-      onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE notes(ID INTEGER PRIMARY KEY, title TEXT, dateTime TEXT, note TEXT,isDone INTEGER,color INTEGER)",
-        );
-      },
-      version: 1,
-    );
-    return _db;
   }
 
   Future<void> closeDatabase() {
