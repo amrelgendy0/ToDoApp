@@ -4,7 +4,7 @@ import 'package:random_color/random_color.dart';
 
 class AutoDirectionTextField extends StatefulWidget {
   AutoDirectionTextField(@required this._labeltext, @required this._controller);
-  Color _color = RandomColor().randomColor(
+ final Color _color = RandomColor().randomColor(
       colorBrightness: const ColorBrightness.custom(const Range(
           ((ColorBrightness.maxBrightness + ColorBrightness.minBrightness) ~/
               1.2),

@@ -19,9 +19,9 @@ class _NotesScreenState extends State<NotesScreen> {
     return FutureBuilder(
       future: handleData,
       builder: (BuildContext context, AsyncSnapshot<List<Notes>> snapshot) {
-        if (!snapshot.hasData)
+        if (!snapshot.hasData) {
           return Center(child: const CircularProgressIndicator());
-        else {
+        } else {
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (ctx, index) {
@@ -39,7 +39,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     vertical: 6,
                   ),
                 ),
-                confirmDismiss: (direction) {
+                confirmDismiss: (_) {
                   setState(() {
                     database().inverseDone(_note);
                   });
@@ -53,14 +53,14 @@ class _NotesScreenState extends State<NotesScreen> {
                   ),
                   child: ListTile(
                     onTap: () {
-                      Navigator.push(context,
+                      Navigator.push(ctx,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return SingleNoteScreen(_note);
                       }));
                     },
                     onLongPress: () {
                       return showDialog(
-                        context: context,
+                        context: ctx,
                         builder: (ctx) => AlertDialog(
                           title: const Text('Are you sure?'),
                           content: const Text(

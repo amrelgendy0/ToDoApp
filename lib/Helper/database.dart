@@ -19,24 +19,27 @@ class database {
     return _db;
   }
 
+  List<Notes> _generateFromMap(List<Map<String, dynamic>> _mapp) {
+    return List<Notes>.generate(
+        _mapp.length, (index) => Notes.FromMap(_mapp[index]));
+  }
+
   Future<List<Notes>> get AllNotes async {
-    return database._db.query('notes').then((value) => List<Notes>.generate(
-        value.length, (index) => Notes.FromMap(value[index])));
+    return _db.query('notes').then((value) => _generateFromMap(value));
   }
 
   Future<List<Notes>> _NotesFilterByDone(int done) async {
-    return database._db
-        .query('notes', where: "isDone = ?", whereArgs: [done]).then((value) =>
-            List<Notes>.generate(
-                value.length, (index) => Notes.FromMap(value[index])));
+    return _db.query('notes',
+        where: "isDone = ?",
+        whereArgs: [done]).then((value) => _generateFromMap(value));
   }
 
-  Future<List<Notes>> get doneNotes {
-    return _NotesFilterByDone(1);
+  Future<List<Notes>> get doneNotes async {
+    return await _NotesFilterByDone(1);
   }
 
-  Future<List<Notes>> get unDoneNotes {
-    return _NotesFilterByDone(0);
+  Future<List<Notes>> get unDoneNotes async {
+    return await _NotesFilterByDone(0);
   }
 
   Future<List<Notes>> get NotesAfter async {
