@@ -14,9 +14,13 @@ class SingleNoteScreen extends StatelessWidget {
           onPressed: () {
             showDialog(
                 context: context,
-                child: SimpleDialog(
-                  title: AddNote(context, notes: _note),
-                )).then((_) {
+                  builder: (BuildContext context) {
+
+                  return  SimpleDialog(
+                    title: AddNote(context, notes: _note),
+                  );
+
+            }).then((_) {
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (BuildContext context) {
                 return HomeScreen();

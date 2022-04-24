@@ -12,20 +12,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 1,
-      length: 3,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
               const Tab(
                 text: 'UnDone Notes',
-                icon: const Icon(Icons.do_not_disturb_on),
+                icon: const Icon(Icons.close),
               ),
               const Tab(
                   text: 'All Notes', icon: const Icon(Icons.speaker_notes)),
               const Tab(
                 text: 'Done Notes',
                 icon: const Icon(Icons.done),
+              ),
+              const Tab(
+                text: 'Notes Before',
+                icon: const Icon(Icons.access_time_outlined),
+              ),
+              const Tab(
+                text: 'Notes After',
+                icon: const Icon(Icons.alarm),
               ),
             ],
           ),
@@ -36,9 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () async {
                 showDialog(
                     context: context,
-                    child: SimpleDialog(
-                      title: AddNote(context),
-                    )).then((_) {
+                    builder: (BuildContext context) {
+                      return SimpleDialog(
+                        title: AddNote(context),
+                      );
+                    }).then((_) {
                   setState(() {});
                 });
               },
@@ -50,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
             NotesScreen(dataTybes.NotesNotDone),
             NotesScreen(dataTybes.AllNotes),
             NotesScreen(dataTybes.NotesDone),
+            NotesScreen(dataTybes.NotesBefore),
+            NotesScreen(dataTybes.NotesAfter),
           ],
         ),
       ),

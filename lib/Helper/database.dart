@@ -14,14 +14,14 @@ class database {
           "CREATE TABLE notes(ID INTEGER PRIMARY KEY, title TEXT, dateTime TEXT, note TEXT,isDone INTEGER,color INTEGER)",
         );
       },
-      version: 1,
+      version: 1,singleInstance: true
     );
     return _db;
   }
 
   List<Notes> _generateFromMap(List<Map<String, dynamic>> _mapp) {
     return List<Notes>.generate(
-        _mapp.length, (index) => Notes.FromMap(_mapp[index]));
+        _mapp.length, (index) => Notes.fromMap(_mapp[index]));
   }
 
   Future<List<Notes>> get AllNotes async {

@@ -29,13 +29,13 @@ class Notes {
     };
   }
 
-  static Notes FromMap(Map<String, dynamic> map) {
+  factory Notes.fromMap(Map<String, dynamic> map) {
     return Notes(
         title: map['title'],
         note: map['note'],
         dateTime: DateTime.parse(map['dateTime']),
         isDone: map['isDone'] == 1 ? true : false,
         color: Color(map['color']),
-        ID: map['ID']);
+        ID: map['ID'],);
   }
 }

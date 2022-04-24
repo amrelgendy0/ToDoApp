@@ -36,6 +36,7 @@ Widget AddNote(BuildContext ctx, {Notes notes}) {
             if (val.trim() == '') {
               return 'You must Select a Date';
             }
+            return null;
           },
         ),
         RaisedButton(
